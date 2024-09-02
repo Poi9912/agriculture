@@ -1,47 +1,52 @@
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
+
+//error handling only for API
+function errorApi(errorObject){
+    console.log('-----Unexpected Error-----')
+    console.error(errorObject)
+    return NextResponse.json({
+        code:500,
+        description: "Internal Server Error"
+    },{status:500})
+}
 
 //auth function for the api
 function validateAuth(token){
     const valid = true //mocked for now
+    let authHeader = headers().get('authorization')
     console.log('validateAuth')
     return valid
 }
-//const isLoggedIn = false;
 
 export function middleware(request){
-    let headers = new Headers(request.headers)
-    console.log(headers)
-
-    /*if(isLoggedIn){
-        return NextResponse.next()
-    }*/
-
-    //if route is not api
-    /*if(!request.nextUrl.pathname.startsWith('/api/:path*')){
-        return NextResponse.next()
-    }*/
-    
-    //verify auth
-    if(!validateAuth(headers.Authorization)){
-        console.log('failed auth')
-        return NextResponse.json({
-            code: 401,
-            description: "Unauthorized"
-        },{status:401})
-    } else {
+    console.log('enters middleware')
+    //if route is docs don't require auth
+    console.log('pathname is: ', request.nextUrl.pathname)
+    if(request.nextUrl.pathname.startsWith('/docs')){
+        console.log('is DOCS path')
         return NextResponse.next()
     }
 
-    //always goes next()
-    
-
-
-    // only on case of not auth
+    //only API calls
+    try {
+        if(!validateAuth(headers.Authorization)){
+            console.log('failed auth')
+            return NextResponse.json({
+                code: 401,
+                description: "Unauthorized"
+            },{status:401})
+        } else {
+            console.log('correct auth')
+            return NextResponse.next()
+        }
+    } catch {
+        errorApi(error)
+    }
+    //redirect function
     //return NextResponse.redirect(new URL('/', request.url))
-
 }
 
 export const config = {
-    matcher: ['/:path*'],
-
+    matcher: ['/api/:path*','/docs/:path*',]
 }
