@@ -1,0 +1,9 @@
+services:
+  api:
+    image: poi9912/agriculture-api:latest
+    environment:
+      - host=localhost
+        env=sb
+    expose:
+      - 3000:3000
+    
