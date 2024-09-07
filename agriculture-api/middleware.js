@@ -1,27 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { headers } from "next/headers";
-import { sendApiError, undefinedApiError } from './apiErrorHandler.js'
+import { existRegistry, validateAuth, undefinedApiError, sendApiError } from './app/api/handlers/apiHandler.js'
 
-const apiPathRegistry = [
-    '/api/hello',
-]
-
-function existRegistry(path){
-    apiPathRegistry.forEach(registry => {
-        if(path==registry){
-            return true
-        }
-    })
-    return false
+export const config = {
+    matcher: ['/api/:path*','/docs/:path*'],
 }
 
-//auth function for the api
-function validateAuth(token){
-    const valid = true //mocked for now
-    let authHeader = headers().get('authorization')
-    console.log('validateAuth')
-    return valid
-}
 
 export function middleware(request){
     console.log('enters middleware')
@@ -29,24 +13,21 @@ export function middleware(request){
 
     if(!existRegistry(request.nextUrl.pathname)){
         console.log('not a registered path')
-        sendApiError(404)
+        return NextResponse.rewrite(new URL(sendApiError(404), request.url))
     }
     //only API calls
+    
     try {
         if(!validateAuth(headers.Authorization)){
             console.log('failed auth')
-            sendApiError(401)
+            return NextResponse.rewrite(new URL(sendApiError(401), request.url))
         } else {
             console.log('correct auth')
             return NextResponse.next()
         }
-    } catch {
-        undefinedApiError(error)
+    } catch (error) {
+        return NextResponse.rewrite(new URL(undefinedApiError(error), request.url))
     }
     //redirect function
     //return NextResponse.redirect(new URL('/', request.url))
-}
-
-export const config = {
-    matcher: ['/api/:path*',]
 }
