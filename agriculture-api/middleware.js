@@ -25,7 +25,7 @@ function apiCalls(request){
 }
 
 function docsCalls(request){
-
+    return NextResponse.next()
 }
 
 export function middleware(request){
@@ -37,5 +37,4 @@ export function middleware(request){
         console.log('enters middleware and calls DOCS')
         return docsCalls(request)
     }
-
 }

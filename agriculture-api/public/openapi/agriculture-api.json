@@ -1,0 +1,33 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "agriculture-api",
+      "description": "agriculture app api description"
+    },
+    "paths": {
+      "/api/hello": {
+        "get": {
+          "operationId": "hello",
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {},
+      "schemas": {}
+    }
+  }

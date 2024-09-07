@@ -7,7 +7,6 @@ const apiPathRegistry = [
 function existRegistry(pathIs){
     let inRegistry = false;
     apiPathRegistry.forEach(registry => {
-        console.log(typeof registry)
         if(pathIs===registry){
             inRegistry = true
         }
