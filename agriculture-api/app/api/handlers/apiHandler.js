@@ -7,7 +7,6 @@ const apiPathRegistry = [
 function existRegistry(pathIs){
     let inRegistry = false;
     apiPathRegistry.forEach(registry => {
-        console.log(registry)
         console.log(typeof registry)
         if(pathIs===registry){
             inRegistry = true
@@ -34,7 +33,6 @@ const responseDefinitions = [
 ];
 
 function getUrlFromDefinitions(code){
-    console.log('enters getUrlFromDefinitions')
     let urlOut = undefined;
     if(code!=500){
         responseDefinitions.forEach(definition => {
@@ -43,10 +41,8 @@ function getUrlFromDefinitions(code){
             }
         })
     }
-
     responseDefinitions.forEach(definition => {
         if(definition.code==code){
-            console.log('error definition found')
             urlOut = definition.url 
         }
     })
@@ -55,13 +51,11 @@ function getUrlFromDefinitions(code){
 }
 
 function undefinedApiError(errorObject){
-    console.log('-----Unexpected Error-----')
     console.error(errorObject)
     return getUrlFromDefinitions(500)
 }
 
 function sendApiError(code) {
-    console.log('enters sendApiError')
     return getUrlFromDefinitions(code)
 }
 

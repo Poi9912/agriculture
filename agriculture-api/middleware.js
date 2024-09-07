@@ -6,17 +6,11 @@ export const config = {
     matcher: ['/api/:path*','/docs/:path*'],
 }
 
-
-export function middleware(request){
-    console.log('enters middleware')
-    console.log("path is: " + request.nextUrl.pathname)
-
+function apiCalls(request){
     if(!existRegistry(request.nextUrl.pathname)){
         console.log('not a registered path')
         return NextResponse.rewrite(new URL(sendApiError(404), request.url))
     }
-    //only API calls
-    
     try {
         if(!validateAuth(headers.Authorization)){
             console.log('failed auth')
@@ -28,6 +22,20 @@ export function middleware(request){
     } catch (error) {
         return NextResponse.rewrite(new URL(undefinedApiError(error), request.url))
     }
-    //redirect function
-    //return NextResponse.redirect(new URL('/', request.url))
+}
+
+function docsCalls(request){
+
+}
+
+export function middleware(request){
+    if(request.nextUrl.pathname.startsWith('/api')){
+        console.log('enters middleware and calls API')
+        return apiCalls(request)
+    }
+    if(request.nextUrl.pathname.startsWith('/docs')){
+        console.log('enters middleware and calls DOCS')
+        return docsCalls(request)
+    }
+
 }
