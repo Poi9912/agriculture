@@ -30,3 +30,6 @@
 
 # vercel
 */.vercel
+
+# local package-loc.json
+*/package-lock.json

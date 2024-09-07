@@ -1,14 +1,18 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
+import { sendApiError, undefinedApiError } from './apiErrorHandler.js'
 
-//error handling only for API
-function errorApi(errorObject){
-    console.log('-----Unexpected Error-----')
-    console.error(errorObject)
-    return NextResponse.json({
-        code:500,
-        description: "Internal Server Error"
-    },{status:500})
+const apiPathRegistry = [
+    '/api/hello',
+]
+
+function existRegistry(path){
+    apiPathRegistry.forEach(registry => {
+        if(path==registry){
+            return true
+        }
+    })
+    return false
 }
 
 //auth function for the api
@@ -21,32 +25,28 @@ function validateAuth(token){
 
 export function middleware(request){
     console.log('enters middleware')
-    //if route is docs don't require auth
-    console.log('pathname is: ', request.nextUrl.pathname)
-    if(request.nextUrl.pathname.startsWith('/docs')){
-        console.log('is DOCS path')
-        return NextResponse.next()
-    }
+    console.log("path is: " + request.nextUrl.pathname)
 
+    if(!existRegistry(request.nextUrl.pathname)){
+        console.log('not a registered path')
+        sendApiError(404)
+    }
     //only API calls
     try {
         if(!validateAuth(headers.Authorization)){
             console.log('failed auth')
-            return NextResponse.json({
-                code: 401,
-                description: "Unauthorized"
-            },{status:401})
+            sendApiError(401)
         } else {
             console.log('correct auth')
             return NextResponse.next()
         }
     } catch {
-        errorApi(error)
+        undefinedApiError(error)
     }
     //redirect function
     //return NextResponse.redirect(new URL('/', request.url))
 }
 
 export const config = {
-    matcher: ['/api/:path*','/docs/:path*',]
+    matcher: ['/api/:path*',]
 }
