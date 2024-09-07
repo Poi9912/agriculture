@@ -1,0 +1,106 @@
+Project DBML {
+  Note: 'BD Structure for agriculture project'
+  database_type: 'PostgreSQL'
+}
+
+Table crops {
+  id integer [primary key]
+  name varchar
+}
+
+Table locations {
+  id integer [primary key]
+  code varchar
+  name varchar
+}
+
+Table cropLocations {
+  id integer [primary key]
+  location integer [ref: > locations.id]
+  crop integer [ref: > crops.id]
+  state varchar
+}
+
+Table sensors {
+  id integer [primary key]
+  serial varchar
+  location integer [ref: > locations.id]
+  type varchar
+  unit vachar
+}
+
+Table cropLocationSensorHistory {
+  id integer [primary key]
+  sensor integer [ref: > sensors.id]
+  cropLocation integer [ref: > cropLocations.id]
+  sensorData number
+  sensorTimeStamp datetime
+}
+
+Table cropStockState {
+  id integer [primary key]
+  crop integer [ref: > crops.id]
+  location integer [ref: > locations.id]
+  addedQuantity integer
+  unit varchar
+  providerValue number
+}
+
+Table markets {
+  id integer [primary key]
+  code varchar
+  location integer [ref: > locations.id]
+}
+
+Table marketStock {
+  id integer [primary key]
+  product integer [ref: - crops.id]
+  availableQuantity integer
+  unit varchar
+  market integer [ref: > markets.id]
+  farmer integer [ref: > farmers.id]
+  sellValue number
+}
+
+Table marketOperations {
+  id integer [primary key]
+  market integer [ref: > markets.id]
+  product integer [ref: > crops.id]
+  operation varchar
+  quantity integer
+  unit varchar
+  totalValue number
+}
+
+Table customers {
+  id integer [primary key]
+  fullName varchar
+  gender varchar
+  phone number
+  email varchar
+  address varchar
+  clossestMarket integer [ref: > markets.id]
+}
+
+Table farmers {
+  id integer [primary key]
+  fullName varchar
+  gender varchar
+  phone number
+  email varchar
+  address varchar
+  farmLocation integer [ref: > locations.id]
+  clossestMarket integer [ref: > markets.id]
+}
+
+Table invoices {
+  id integer [primary key]
+  customer integer [ref: > customers.id]
+  market integer [ref: > markets.id]
+}
+
+Table invoiceDetails {
+  id integer [primary key]
+  parentInvoice integer [ref: > invoices.id]
+  marketOperation integer [ref: > marketOperations.id]
+}
