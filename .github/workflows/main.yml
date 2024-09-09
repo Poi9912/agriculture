@@ -3,6 +3,7 @@ name: build and push
 on:
   push:
     branches: ['main']
+    paths: ['agriculture-api/**']
     
 jobs:
     publish_images:
@@ -20,6 +21,3 @@ jobs:
             - name: publish image
               run: |
                 docker push poi9912/agriculture-api:latest
-              
-              
-  
