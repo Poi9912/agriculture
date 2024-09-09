@@ -729,7 +729,8 @@
                       "description": "resource created"
                   }
               },
-              "operationId": "newSensor"
+              "operationId": "newSensor",
+              "summary": "registers a new sensor"
           },
           "delete": {
               "tags": [
@@ -893,7 +894,8 @@
                       "description": "resource found"
                   }
               },
-              "operationId": "getMarkets"
+              "operationId": "getMarkets",
+              "summary": "gets markets"
           },
           "put": {
               "requestBody": {
@@ -976,7 +978,8 @@
                       "description": "resource deleted"
                   }
               },
-              "operationId": "deleteMarket"
+              "operationId": "deleteMarket",
+              "summary": "delete markets by id"
           }
       },
       "/farmers": {
@@ -1084,7 +1087,8 @@
                       "description": "resource created"
                   }
               },
-              "operationId": "newFarmer"
+              "operationId": "newFarmer",
+              "summary": "registers a new farmer"
           },
           "delete": {
               "tags": [
@@ -1106,7 +1110,9 @@
                   "204": {
                       "description": "resource deleted"
                   }
-              }
+              },
+              "operationId": "deleteFarmer",
+              "summary": "deletes a farmer by id"
           }
       },
       "/market-stock/": {
