@@ -1,0 +1,11 @@
+{
+  "name": "agriculture-mocks",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "poi9912",
+  "license": "ISC",
+  "description": ""
+}
