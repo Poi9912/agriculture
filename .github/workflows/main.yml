@@ -11,6 +11,10 @@ jobs:
         steps:
             - name: checkout
               uses: actions/checkout@v4.1.7
+            - name: pull images
+              run: |
+                docker pull poi9912/agriculture-api:latest
+                docker pull poi9912/agriculture-mock-importer:latest
             - name: build api
               run: docker build ./agriculture-api/ -t poi9912/agriculture-api:latest
             - name: build mock-importer
