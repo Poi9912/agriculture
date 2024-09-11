@@ -14,7 +14,7 @@ jobs:
             - name: build api
               run: docker build ./agriculture-api/ -t poi9912/agriculture-api:latest
             - name: build mock-importer
-              run: docker build ./agriculture-api/ -t poi9912/agriculture-mock-importer:latest
+              run: docker build ./mocks/ -t poi9912/agriculture-mock-importer:latest
             - name: login to Docker Hub
               uses: docker/login-action@v3
               with: 
