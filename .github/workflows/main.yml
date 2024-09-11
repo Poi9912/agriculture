@@ -3,7 +3,7 @@ name: build and push
 on:
   push:
     branches: ['main']
-    paths: ['agriculture-api/**','mocks/**']
+    paths: ['agriculture-api/**','mocks/**','.github/workflows/**']
     
 jobs:
     publish_images:
