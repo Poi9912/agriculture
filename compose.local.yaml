@@ -13,10 +13,13 @@ services:
       - com.centurylinklabs.watchtower.enable=true
   reverse-proxy: 
     image: traefik:latest
+    restart: unless-stopped
     command:
       - "--api.insecure=true"
       - "--providers.docker"
       - "--providers.docker.exposedbydefault=false"
+      #- "--providers.docker.allowemptyservices=true"
+      - "--entrypoints.web.address=:80"
     ports:
       - 80:80
       - 8080:8080
@@ -30,9 +33,11 @@ services:
       - host=localhost
         env=sb
     restart: unless-stopped
+    expose:
+      - 3000
     labels:
       - traefik.enable=true
-      - traefik.http.routers.api.rule=Host('localhost')
+      - traefik.http.routers.api.rule=Host("api.localhost")
       - com.centurylinklabs.watchtower.enable=true
   importer:
     image: poi9912/agriculture-mock-importer:latest
@@ -42,11 +47,13 @@ services:
   microcks:
     image: quay.io/microcks/microcks-uber:latest-native
     restart: unless-stopped
+    expose:
+      - 8080
     volumes:
       - microcksdata:/deployments/config
     labels:
       - traefik.enable=true
-      - traefik.http.routers.microcks.rule=Host('localhost')
+      - traefik.http.routers.microcks.rule=Host("mocks.localhost")
       - com.centurylinklabs.watchtower.enable=true
 volumes:
   microcksdata:
