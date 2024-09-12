@@ -1,0 +1,52 @@
+name: agriculture-local
+services:
+  watchtower:
+    image: containrrr/watchtower:latest
+    command:
+      - "--label-enable"
+      - "--interval"
+      - "30"
+      - "--rolling-restart"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+  reverse-proxy: 
+    image: traefik:latest
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker"
+      - "--providers.docker.exposedbydefault=false"
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+  api:
+    image: poi9912/agriculture-api:latest
+    environment:
+      - host=localhost
+        env=sb
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.api.rule=Host('localhost')
+      - com.centurylinklabs.watchtower.enable=true
+  importer:
+    image: poi9912/agriculture-mock-importer:latest
+    depends_on:
+      microcks:
+        condition: service_started
+  microcks:
+    image: quay.io/microcks/microcks-uber:latest-native
+    restart: unless-stopped
+    volumes:
+      - microcksdata:/deployments/config
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.microcks.rule=Host('localhost')
+      - com.centurylinklabs.watchtower.enable=true
+volumes:
+  microcksdata:
