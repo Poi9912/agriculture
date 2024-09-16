@@ -28,7 +28,9 @@ services:
     ports:
       - 80:80
       - 8080:8080
-      - 8899:8899
+      # - 8899:8899
+    expose:
+      - 8899
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
@@ -79,6 +81,9 @@ services:
     restart: unless-stopped
   grafana:
     image: grafana/grafana:latest
+    environment:
+      - GF_DEFAULT_INSTANCE_NAME=agriculture-api
+      - GF_PATHS_CONFIG=/etc/grafana/provisioning/custom.local.ini
     volumes:
       - ./monitoring/grafana:/etc/grafana/provisioning
     expose:

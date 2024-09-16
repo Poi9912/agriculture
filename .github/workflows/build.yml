@@ -1,0 +1,26 @@
+name: test, build and push
+
+on:
+  push:
+    branches: ['main']
+    paths: ['agriculture-api/**','mocks/**','.github/workflows/**']
+    
+jobs:
+  publish_images:
+      runs-on: ubuntu-latest
+      steps:
+          - name: checkout
+            uses: actions/checkout@v4.1.7
+          - name: pull images
+            run: |
+              docker pull poi9912/agriculture-api:latest
+              docker pull poi9912/agriculture-mock-importer:latest
+          - name: login to Docker Hub
+            uses: docker/login-action@v3
+            with: 
+              username: ${{ secrets.DOCKERHUB_USERNAME }}
+              password: ${{ secrets.DOCKERHUB_TOKEN }}
+          - name: build and publish api
+            run: docker build ./agriculture-api/ -t poi9912/agriculture-api:latest --push
+          - name: build and publish mock-importer
+            run: docker build ./mocks/ -t poi9912/agriculture-mock-importer:latest --push
