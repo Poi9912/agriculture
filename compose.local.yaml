@@ -38,8 +38,9 @@ services:
   api:
     image: poi9912/agriculture-api:latest
     environment:
-      - host=localhost
-        env=sb
+      - HOST=api.localhost
+      - ENV=sb
+      - ENDPOINT=http://microcks:8080/rest/agriculture-api/1.0.0
     restart: unless-stopped
     expose:
       - 3000

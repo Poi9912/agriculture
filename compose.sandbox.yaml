@@ -41,8 +41,9 @@ services:
   api:
     image: poi9912/agriculture-api:latest
     environment:
-      - host=${{ SANDBOX_HOST }}
-        env=sb
+      - HOST=api.${{ SANDBOX_HOST }}
+      - ENV=sb
+      - ENDPOINT=http://microcks:8080/rest/agriculture-api/1.0.0
     restart: unless-stopped
     deploy:
       mode: replicated

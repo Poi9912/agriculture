@@ -2,12 +2,14 @@ import { headers } from "next/headers";
 
 const apiPathRegistry = [
     '/api/hello',
+    '/api/crops'
 ]
 
 function existRegistry(pathIs){
     let inRegistry = false;
+    console.log(pathIs)
     apiPathRegistry.forEach(registry => {
-        if(pathIs===registry){
+        if(pathIs==registry){
             inRegistry = true
         }
     })

@@ -7,10 +7,10 @@ export const config = {
 }
 
 function apiCalls(request){
-    if(!existRegistry(request.nextUrl.pathname)){
+    /*if(!existRegistry(request.nextUrl.pathname)){
         console.log('not a registered path')
         return NextResponse.rewrite(new URL(sendApiError(404), request.url))
-    }
+    }*/
     try {
         if(!validateAuth(headers.Authorization)){
             console.log('failed auth')
@@ -30,10 +30,12 @@ function docsCalls(request){
 
 export function middleware(request){
     if(request.nextUrl.pathname.startsWith('/api')){
+        console.log(request.nextUrl.pathname)
         console.log('enters middleware and calls API')
         return apiCalls(request)
     }
     if(request.nextUrl.pathname.startsWith('/docs')){
+        console.log(request.nextUrl.pathname)
         console.log('enters middleware and calls DOCS')
         return docsCalls(request)
     }
