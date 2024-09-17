@@ -80,10 +80,6 @@ services:
     depends_on:
       - reverse-proxy
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.prometheus.rule=Host("prometheus.${{ SANDBOX_HOST }}")
-      - traefik.http.routers.prometheus.entrypoints=websecure
-      - traefik.http.routers.prometheus.tls.certresolver=myresolver
       - com.centurylinklabs.watchtower.enable=true
     restart: unless-stopped
   grafana:
