@@ -14,9 +14,9 @@ async function headHandler(request) {
 
 //API ROUTER EXPORTS
 async function HEAD(request){
-    return await getHandler(request)
+    return await headHandler(request)
 }
 
 module.exports = {
-    headHandler
+    HEAD
 }
