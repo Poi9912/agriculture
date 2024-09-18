@@ -1,8 +1,9 @@
-import { headers } from "next/headers";
+import { headers } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 const apiPathRegistry = [
     '/api/hello',
-    '/api/crops'
+    '/api/crops',
 ]
 
 function existRegistry(pathIs){
@@ -25,12 +26,12 @@ function validateAuth(token){
 }
 
 const responseDefinitions = [
-    {code:400,details:"Bad Request",url:"/api/handlers/pages/400"},
-    {code:401,details:"Unauthorized",url:"/api/handlers/pages/401"},
-    {code:403,details:"Forbidden",url:"/api/handlers/pages/403"},
-    {code:404,details:"Resource not found",url:"/api/handlers/pages/404"},
-    {code:500,details:"Internal Server Error",url:"/api/handlers/pages/500"},
-    {code:502,details:"Unable to reach backend, please try again later",url:"/api/handlers/pages/502"},
+    {code:400,details:"Bad Request",url:"/error/pages/400"},
+    {code:401,details:"Unauthorized",url:"/error/pages/401"},
+    {code:403,details:"Forbidden",url:"/error/pages/403"},
+    {code:404,details:"Resource not found",url:"/error/pages/404"},
+    {code:500,details:"Internal Server Error",url:"/error/pages/500"},
+    {code:502,details:"Unable to reach backend, please try again later",url:"/error/pages/502"},
 ];
 
 function getUrlFromDefinitions(code){
@@ -60,9 +61,25 @@ function sendApiError(code) {
     return getUrlFromDefinitions(code)
 }
 
+function handleResponse(url,data,status){
+    //console.log('enters handle response')
+    switch (status){
+        case 200:
+            //console.log('200')
+            return NextResponse.json(data,{status})
+        case 204:
+            //console.log('204')
+            return NextResponse.json('',{status})
+        default:
+            //console.log(code)
+            return NextResponse.redirect(new URL(sendApiError(status),url))
+    }
+}
+
 module.exports = {
     validateAuth,
     undefinedApiError,
     sendApiError,
     existRegistry,
+    handleResponse,
 }

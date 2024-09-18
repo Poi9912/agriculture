@@ -41,16 +41,17 @@ services:
   api:
     image: poi9912/agriculture-api:latest
     environment:
-      - HOST=api.${{ SANDBOX_HOST }}
+      - HOST=api-agriculture.${{ SANDBOX_HOST }}
       - ENV=sb
       - ENDPOINT=http://microcks:8080/rest/agriculture-api/1.0.0
+      - TIMEOUT=10
     restart: unless-stopped
     deploy:
       mode: replicated
       replicas: 2
     labels:
       - traefik.enable=true
-      - traefik.http.routers.api.rule=Host("api.${{ SANDBOX_HOST }}")
+      - traefik.http.routers.api.rule=Host("api-agriculture.${{ SANDBOX_HOST }}")
       - traefik.http.routers.api.entrypoints=websecure
       - traefik.http.routers.api.tls.certresolver=myresolver
       - com.centurylinklabs.watchtower.enable=true
@@ -97,7 +98,7 @@ services:
       - prometheus
     labels:
       - traefik.enable=true
-      - traefik.http.routers.grafana.rule=Host("grafana.${{ SANDBOX_HOST }}")
+      - traefik.http.routers.grafana.rule=Host("grafana-agriculture.${{ SANDBOX_HOST }}")
       - traefik.http.routers.grafana.entrypoints=websecure
       - traefik.http.routers.grafana.tls.certresolver=myresolver
       - com.centurylinklabs.watchtower.enable=true

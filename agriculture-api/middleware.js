@@ -7,10 +7,10 @@ export const config = {
 }
 
 function apiCalls(request){
-    /*if(!existRegistry(request.nextUrl.pathname)){
+    if(!existRegistry(request.nextUrl.pathname)){
         console.log('not a registered path')
         return NextResponse.rewrite(new URL(sendApiError(404), request.url))
-    }*/
+    }
     try {
         if(!validateAuth(headers.Authorization)){
             console.log('failed auth')

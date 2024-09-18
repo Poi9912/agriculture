@@ -16,7 +16,7 @@
                 "server": {
                     "enum": [
                         "http://localhost:3000",
-                        "https://agriculture.jeuzportfolio.net"
+                        "https://api-agriculture.jeuzportfolio.net"
                     ],
                     "default": "http://localhost:3000"
                 }
