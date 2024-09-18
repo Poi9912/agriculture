@@ -13,7 +13,7 @@ async function getHandler(request) {
     let getById = request.nextUrl.searchParams.get('getById')
     let req = url
     let query = '?'
-    getById !== null ? req = req + query + 'getById=' + getById : ''
+    getById !== null ? req = req + query + 'getById=' + getById + '&' : ''
     
     //only for sandbox
     if(envSB=='sb'){

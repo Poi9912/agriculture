@@ -10,10 +10,14 @@ const operationId = '/invoices'
 //get
 async function getHandler(request) {
     let url = baseUrl + operationId
+    let getByCustomerId = request.nextUrl.searchParams.get('getByCustomerId')
+    let getByMarketId = request.nextUrl.searchParams.get('getByMarketId')
     let getById = request.nextUrl.searchParams.get('getById')
     let req = url
     let query = '?'
-    getById !== null ? req = req + query + 'getById=' + getById : ''
+    getByCustomerId !== null ? req = req + query + 'getByCustomerId=' + getByCustomerId + '&' : ''
+    getByMarketId !== null ? req = req + query + 'getByMarketId=' + getByMarketId + '&' : ''
+    getById !== null ? req = req + query + 'getById=' + getById + '&' : ''
     
     //only for sandbox
     if(envSB=='sb'){

@@ -11,9 +11,15 @@ const operationId = '/backendpath'
 async function getHandler(request) {
     let url = baseUrl + operationId
     let getById = request.nextUrl.searchParams.get('getById')
+    let getByLocationId = request.nextUrl.searchParams.get('getByLocationId')
+    let getBySerial = request.nextUrl.searchParams.get('getBySerial')
+    let getByType = request.nextUrl.searchParams.get('getByType')
     let req = url
     let query = '?'
-    getById !== null ? req = req + query + 'getById=' + getById : ''
+    getById !== null ? req = req + query + 'getById=' + getById + '&' : ''
+    getByLocationId !== null ? req = req + query + 'getByLocationId=' + getByLocationId + '&' : ''
+    getBySerial !== null ? req = req + query + 'getBySerial=' + getBySerial + '&' : ''
+    getByType !== null ? req = req + query + 'getByType=' + getByType + '&' : ''
     
     //only for sandbox
     if(envSB=='sb'){

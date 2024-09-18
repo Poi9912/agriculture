@@ -10,10 +10,14 @@ const operationId = '/crop-stock'
 //get
 async function getHandler(request) {
     let url = baseUrl + operationId
+    let getByCropId = request.nextUrl.searchParams.get('getByCropId')
+    let getByFarmLocationId = request.nextUrl.searchParams.get('getByFarmLocationId')
     let getById = request.nextUrl.searchParams.get('getById')
     let req = url
     let query = '?'
-    getById !== null ? req = req + query + 'getById=' + getById : ''
+    getByCropId !== null ? req = req + query + 'getByCropId=' + getByCropId + '&' : ''
+    getByFarmLocationId !== null ? req = req + query + 'getByFarmLocationId=' + getByFarmLocationId + '&' : ''
+    getById !== null ? req = req + query + 'getById=' + getById + '&' : ''
     
     //only for sandbox
     if(envSB=='sb'){

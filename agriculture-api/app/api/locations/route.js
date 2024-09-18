@@ -11,9 +11,11 @@ const operationId = '/locations'
 async function getHandler(request) {
     let url = baseUrl + operationId
     let getById = request.nextUrl.searchParams.get('getById')
+    let getByCode = request.nextUrl.searchParams.get('getByCode')
     let req = url
     let query = '?'
-    getById !== null ? req = req + query + 'getById=' + getById : ''
+    getById !== null ? req = req + query + 'getById=' + getById + '&' : ''
+    getByCode !== null ? req = req + query + 'getByCode=' + getByCode + '&' : ''
     
     //only for sandbox
     if(envSB=='sb'){

@@ -49,7 +49,7 @@
                         "name": "getById",
                         "description": "id of the item you want",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query"
                     }
@@ -258,7 +258,7 @@
                         "name": "delById",
                         "description": "id of the item to delete",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query",
                         "required": true
@@ -314,9 +314,18 @@
                         "name": "getById",
                         "description": "id of the item to get on search",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query"
+                    },
+                    {
+                        "name": "getByCode",
+                        "description": "code of location",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "required": false
                     }
                 ],
                 "responses": {
@@ -523,7 +532,7 @@
                         "name": "delById",
                         "description": "id of the item to delete",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query",
                         "required": true
@@ -566,6 +575,212 @@
                 }
             }
         },
+        "/crop-stock": {
+            "summary": "manages crops stock",
+            "get": {
+                "tags": [
+                    " farm",
+                    " management",
+                    "market",
+                    "transactions"
+                ],
+                "parameters": [
+                    {
+                        "name": "getById",
+                        "description": "get item by id on search",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "getByCropId",
+                        "description": "filters by crop id on search",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "getByFarmLocationId",
+                        "description": "filter by farm location id on search",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/cropStockGetRes"
+                                },
+                                "examples": {
+                                    "200": {
+                                        "value": {
+                                            "code": 200,
+                                            "data": [
+                                                {
+                                                    "id": "56",
+                                                    "crop_name": "some text",
+                                                    "farm_location_code": "some text",
+                                                    "quantity": 67.32,
+                                                    "unit": "some text",
+                                                    "farm_value_per_unit": "some text"
+                                                },
+                                                {
+                                                    "id": "71",
+                                                    "crop_name": "some text",
+                                                    "farm_location_code": "some text",
+                                                    "quantity": 85.53,
+                                                    "unit": "some text",
+                                                    "farm_value_per_unit": "some text"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": "resource found"
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "bad request"
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "resource not found"
+                    }
+                },
+                "operationId": "getCropStock",
+                "summary": "gets crop stock"
+            },
+            "put": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/cropStockRemoveReq"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "tags": [
+                    " farm",
+                    " management",
+                    "market",
+                    "transactions"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "stock updated"
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "bad request"
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "resource not found"
+                    }
+                },
+                "operationId": "removeCropsStock",
+                "summary": "removes crops stock"
+            },
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/cropStockAddRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "tags": [
+                    " farm",
+                    " management",
+                    "market",
+                    "transactions"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "stock added"
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "bad request"
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "unauthorized"
+                    }
+                },
+                "operationId": "addCropStock",
+                "summary": "adds crops stock"
+            }
+        },
         "/crop-locations": {
             "summary": "manages crops locations",
             "get": {
@@ -575,28 +790,20 @@
                 ],
                 "parameters": [
                     {
-                        "name": "getById",
-                        "description": "id of item to get on search",
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "in": "header"
-                    },
-                    {
-                        "name": "getByCropName",
-                        "description": "name of crop to filter in search",
+                        "name": "getByCropId",
+                        "description": "item id to filter in search",
                         "schema": {
                             "type": "string"
                         },
-                        "in": "header"
+                        "in": "query"
                     },
                     {
-                        "name": "getByLocationCode",
-                        "description": "code of location to filter on search",
+                        "name": "getByLocationId",
+                        "description": "item id to filter in search",
                         "schema": {
                             "type": "string"
                         },
-                        "in": "header"
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -811,7 +1018,7 @@
                         "name": "delById",
                         "description": "id of the item to delete",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query",
                         "required": true
@@ -856,212 +1063,6 @@
                 "summary": "deletes a crop-location by id"
             }
         },
-        "/crop-stock": {
-            "summary": "manages crops stock",
-            "get": {
-                "tags": [
-                    " farm",
-                    " management",
-                    "market",
-                    "transactions"
-                ],
-                "parameters": [
-                    {
-                        "name": "getById",
-                        "description": "get item by id on search",
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "in": "header"
-                    },
-                    {
-                        "name": "getByCropName",
-                        "description": "filters by crop name on search",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "in": "header"
-                    },
-                    {
-                        "name": "getByFarmLocationCode",
-                        "description": "filter by farm location code on search",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "in": "header"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/cropStockGetRes"
-                                },
-                                "examples": {
-                                    "200": {
-                                        "value": {
-                                            "code": 200,
-                                            "data": [
-                                                {
-                                                    "id": "56",
-                                                    "crop_name": "some text",
-                                                    "farm_location_code": "some text",
-                                                    "quantity": 67.32,
-                                                    "unit": "some text",
-                                                    "farm_value_per_unit": "some text"
-                                                },
-                                                {
-                                                    "id": "71",
-                                                    "crop_name": "some text",
-                                                    "farm_location_code": "some text",
-                                                    "quantity": 85.53,
-                                                    "unit": "some text",
-                                                    "farm_value_per_unit": "some text"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "description": "resource found"
-                    },
-                    "400": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        },
-                        "description": "bad request"
-                    },
-                    "401": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        },
-                        "description": "unauthorized"
-                    },
-                    "404": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        },
-                        "description": "resource not found"
-                    }
-                },
-                "operationId": "getCropStock",
-                "summary": "gets crop stock"
-            },
-            "put": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/cropStockRemoveReq"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "tags": [
-                    " farm",
-                    " management",
-                    "market",
-                    "transactions"
-                ],
-                "responses": {
-                    "204": {
-                        "description": "stock updated"
-                    },
-                    "400": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        },
-                        "description": "bad request"
-                    },
-                    "401": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        },
-                        "description": "unauthorized"
-                    },
-                    "404": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        },
-                        "description": "resource not found"
-                    }
-                },
-                "operationId": "removeCropsStock",
-                "summary": "removes crops stock"
-            },
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/cropStockAddRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "tags": [
-                    " farm",
-                    " management",
-                    "market",
-                    "transactions"
-                ],
-                "responses": {
-                    "204": {
-                        "description": "stock added"
-                    },
-                    "400": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        },
-                        "description": "bad request"
-                    },
-                    "401": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        },
-                        "description": "unauthorized"
-                    }
-                },
-                "operationId": "addCropStock",
-                "summary": "adds crops stock"
-            }
-        },
         "/customers": {
             "summary": "manages customers",
             "get": {
@@ -1074,13 +1075,13 @@
                         "name": "getById",
                         "description": "id of item to search",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query"
                     },
                     {
-                        "name": "getByClossestMarketCode",
-                        "description": "filters by clossest market code on search",
+                        "name": "getByClossestMarketId",
+                        "description": "filters by clossest market id on search",
                         "schema": {
                             "type": "string"
                         },
@@ -1090,7 +1091,7 @@
                         "name": "getByPhone",
                         "description": "filters by phone number on search",
                         "schema": {
-                            "type": "number"
+                            "type": "string"
                         },
                         "in": "query"
                     },
@@ -1327,7 +1328,7 @@
                         "name": "delById",
                         "description": "id of item to delete",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query",
                         "required": true
@@ -1384,21 +1385,21 @@
                         "name": "getById",
                         "description": "id of item to get in search",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query"
                     },
                     {
-                        "name": "getByFarmLocationCode",
-                        "description": "filters by farmers farm location",
+                        "name": "getByFarmLocationId",
+                        "description": "filters by farmers farm location id",
                         "schema": {
                             "type": "string"
                         },
                         "in": "query"
                     },
                     {
-                        "name": "getByFarmersClossestMarketCode",
-                        "description": "filters by farmer clossests market code in search",
+                        "name": "getByFarmersClossestMarketId",
+                        "description": "filters by farmer clossests market id in search",
                         "schema": {
                             "type": "string"
                         },
@@ -1633,7 +1634,7 @@
                         "name": "delById",
                         "description": "id of item to delete",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query",
                         "required": true
@@ -1692,13 +1693,13 @@
                         "name": "getById",
                         "description": "id of item to search",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query"
                     },
                     {
-                        "name": "getByMarketCode",
-                        "description": "filters by market code on search",
+                        "name": "getByMarketId",
+                        "description": "filters by market id on search",
                         "schema": {
                             "type": "string"
                         },
@@ -1708,7 +1709,7 @@
                         "name": "getByCustomerId",
                         "description": "filters by customer id on search",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query"
                     }
@@ -1904,7 +1905,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "getByMarketCode",
+                        "name": "getByMarketId",
                         "description": "filter by market code on search",
                         "schema": {
                             "type": "string"
@@ -1920,7 +1921,7 @@
                         "in": "query"
                     },
                     {
-                        "name": "getByProductName",
+                        "name": "getByProductId",
                         "description": "filter by product name on search",
                         "schema": {
                             "type": "string"
@@ -1999,7 +2000,7 @@
                 "summary": "get market operations grouped by market, product and operation"
             }
         },
-        "/market-stock/": {
+        "/market-stock": {
             "summary": "manages market stock",
             "get": {
                 "tags": [
@@ -2013,25 +2014,25 @@
                         "name": "getById",
                         "description": "get item by id on search",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
-                        "in": "header"
+                        "in": "query"
                     },
                     {
-                        "name": "getByCropName",
+                        "name": "getByCropId",
                         "description": "filters by crop name on search",
                         "schema": {
                             "type": "string"
                         },
-                        "in": "header"
+                        "in": "query"
                     },
                     {
-                        "name": "getByMarketCode",
+                        "name": "getByMarketId",
                         "description": "filter by farm location code on search",
                         "schema": {
                             "type": "string"
                         },
-                        "in": "header"
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -2220,13 +2221,21 @@
                         "name": "getById",
                         "description": "id of item to search",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query"
                     },
                     {
-                        "name": "getByLocationCode",
-                        "description": "filter by location code on search",
+                        "name": "getByLocationId",
+                        "description": "filter by location id on search",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "getByCode",
+                        "description": "item code to filter in search",
                         "schema": {
                             "type": "string"
                         },
@@ -2441,7 +2450,7 @@
                         "name": "delById",
                         "description": "id of item to delete",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "in": "query",
                         "required": true
@@ -2510,8 +2519,8 @@
                         "in": "query"
                     },
                     {
-                        "name": "getByLocationCode",
-                        "description": "location code to filter on search",
+                        "name": "getByLocationId",
+                        "description": "location id to filter on search",
                         "schema": {
                             "type": "string"
                         },
@@ -2742,9 +2751,9 @@
                         "name": "delById",
                         "description": "id of the item to delete",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
-                        "in": "header",
+                        "in": "query",
                         "required": true
                     }
                 ],

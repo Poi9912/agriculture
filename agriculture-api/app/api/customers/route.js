@@ -10,10 +10,16 @@ const operationId = '/customers'
 //get
 async function getHandler(request) {
     let url = baseUrl + operationId
+    let getByClossestMarketId = request.nextUrl.searchParams.get('getByClossestMarketId')
+    let getByEmail = request.nextUrl.searchParams.get('getByEmail')
+    let getByPhone = request.nextUrl.searchParams.get('getByPhone')
     let getById = request.nextUrl.searchParams.get('getById')
     let req = url
     let query = '?'
-    getById !== null ? req = req + query + 'getById=' + getById : ''
+    getById !== null ? req = req + query + 'getById=' + getByCropId + '&' : ''
+    getByClossestMarketId !== null ? req = req + query + 'getByClossestMarketId=' + getByClossestMarketId + '&' : ''
+    getByEmail !== null ? req = req + query + 'getByEmail=' + getByEmail + '&' : ''
+    getByPhone !== null ? req = req + query + 'getByPhone=' + getByPhone + '&' : ''
     
     //only for sandbox
     if(envSB=='sb'){

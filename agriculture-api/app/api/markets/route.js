@@ -10,10 +10,14 @@ const operationId = '/markets'
 //get
 async function getHandler(request) {
     let url = baseUrl + operationId
+    let getByCode = request.nextUrl.searchParams.get('getByCode')
+    let getByLocationId = request.nextUrl.searchParams.get('getByLocationId')
     let getById = request.nextUrl.searchParams.get('getById')
     let req = url
     let query = '?'
-    getById !== null ? req = req + query + 'getById=' + getById : ''
+    getByCode !== null ? req = req + query + 'getByCode=' + getByCode + '&' : ''
+    getByLocationId !== null ? req = req + query + 'getByLocationId=' + getByLocationId + '&' : ''
+    getById !== null ? req = req + query + 'getById=' + getById + '&' : ''
     
     //only for sandbox
     if(envSB=='sb'){

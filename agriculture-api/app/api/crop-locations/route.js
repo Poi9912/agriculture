@@ -10,10 +10,13 @@ const operationId = '/crops-locations'
 //get
 async function getHandler(request) {
     let url = baseUrl + operationId
-    let getById = request.nextUrl.searchParams.get('getById')
+    let getByCropId = request.nextUrl.searchParams.get('getByCropId')
+    let getByLocationId = request.nextUrl.searchParams.get('getByLocationId')
     let req = url
     let query = '?'
-    getById !== null ? req = req + query + 'getById=' + getById : ''
+    getByCropId !== null ? req = req + query + 'getByCropId=' + getByCropId + '&' : ''
+    getByLocationId !== null ? req = req + query + 'getByLocationId=' + getByLocationId + '&' : ''
+
     
     //only for sandbox
     if(envSB=='sb'){

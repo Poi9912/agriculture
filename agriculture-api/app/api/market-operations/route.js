@@ -10,10 +10,14 @@ const operationId = '/market-operations'
 //get
 async function getHandler(request) {
     let url = baseUrl + operationId
-    let getById = request.nextUrl.searchParams.get('getById')
+    let getByMarketId = request.nextUrl.searchParams.get('getByMarketId')
+    let getByOperation = request.nextUrl.searchParams.get('getByOperation')
+    let getByProductId = request.nextUrl.searchParams.get('getByProductId')
     let req = url
     let query = '?'
-    getById !== null ? req = req + query + 'getById=' + getById : ''
+    getByMarketId !== null ? req = req + query + 'getByMarketId=' + getByMarketId + '&' : ''
+    getByOperation !== null ? req = req + query + 'getByOperation=' + getByOperation + '&' : ''
+    getByProductId !== null ? req = req + query + 'getByProductId=' + getByProductId + '&' : ''
     
     //only for sandbox
     if(envSB=='sb'){
