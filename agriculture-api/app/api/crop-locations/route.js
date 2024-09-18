@@ -4,7 +4,7 @@ import { handleResponse } from '../apiHandler.js'
 const baseUrl = process.env.ENDPOINT ? process.env.ENDPOINT : 'http://microcks:8080/rest/agriculture-api/1.0.0'
 const envSB = process.env.ENV ? process.env.ENV : 'sb'
 const timeout = process.env.TIMEOUT ? process.env.TIMEOUT : 10
-const operationId = '/crops'
+const operationId = '/crops-locations'
 
 //BACKEND CALLS
 //get

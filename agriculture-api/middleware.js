@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
-import { existRegistry, validateAuth, undefinedApiError, sendApiError } from './app/api/handlers/apiHandler.js'
+import { existRegistry, validateAuth, undefinedApiError, sendApiError } from './app/api/apiHandler.js'
 
 export const config = {
     matcher: ['/api/:path*','/docs/:path*'],

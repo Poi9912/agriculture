@@ -2,8 +2,24 @@ import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 const apiPathRegistry = [
+////////     '/api/',  //base for new routes
+
+    //monitoring endpoint
+    '/api/monitoring',
+    //hello for example porpuses
     '/api/hello',
+    //registered operations
     '/api/crops',
+    '/api/crop-locations',
+    '/api/crop-stock',
+    '/api/customers',
+    '/api/farmers',
+    '/api/invoices',
+    '/api/locations',
+    '/api/market-operations',
+    '/api/market-stock',
+    '/api/markets',
+    '/api/sensors',
 ]
 
 function existRegistry(pathIs){
