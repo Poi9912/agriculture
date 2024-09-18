@@ -63,15 +63,15 @@ async function putCrops(request){
 //delete
 async function deleteCrops(request){
     let url = baseUrl + '/crops'
-    let deleteById = request.nextUrl.searchParams.get('deleteById')
+    let delById = request.nextUrl.searchParams.get('delById')
     let req = url
     let query = '?'
-    deleteById !== null ? req = req + query + 'deleteById=' + deleteById : ''
+    delById !== null ? req = req + query + 'delById=' + delById : ''
     
     //only for sandbox
     if(envSB=='sb'){
         req=url
-        return NextResponse.json('',{status:204})
+        return handleResponse(request.url,null,204)
     }
 
     let res = undefined

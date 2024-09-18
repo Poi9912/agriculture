@@ -69,7 +69,7 @@ function handleResponse(url,data,status){
             return NextResponse.json(data,{status})
         case 204:
             //console.log('204')
-            return NextResponse.json('',{status})
+            return new Response(null,{status: 204})
         default:
             //console.log(code)
             return NextResponse.redirect(new URL(sendApiError(status),url))
