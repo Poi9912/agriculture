@@ -6,8 +6,6 @@ const apiPathRegistry = [
 
     //monitoring endpoint
     '/api/monitoring',
-    //hello for example porpuses
-    '/api/hello',
     //registered operations
     '/api/crops',
     '/api/crop-locations',
