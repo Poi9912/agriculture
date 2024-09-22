@@ -22,9 +22,10 @@ jobs:
                 port: ${{ secrets.DEPLOY_PORT }}
                 command: |
                     cd ${{ secrets.DEPLOY_WORKDIR }}
-                    curl -O https://github.com/Poi9912/agriculture/releases/download/${{ steps.last-release.outputs.release }}/agriculture-${{ steps.last-release.outputs.release }}.zip
-                    mv agriculture-${{ steps.last-release.outputs.release }}.zip agriculture.zip
-                    unzip agriculture.zip
-                    rm agriculture.zip 
+                    ls -la
+#                    curl -O https://github.com/Poi9912/agriculture/releases/download/${{ steps.last-release.outputs.release }}/agriculture-${{ steps.last-release.outputs.release }}.zip
+#                    mv agriculture-${{ steps.last-release.outputs.release }}.zip agriculture.zip
+#                    unzip agriculture.zip
+#                    rm agriculture.zip 
 #                    docker compose up -d --remove-orphans --pull always
 #                    exit
