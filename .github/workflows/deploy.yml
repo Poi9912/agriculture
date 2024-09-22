@@ -11,6 +11,22 @@ jobs:
                 repo: Poi9912/agriculture
                 match: "agriculture.zip"
                 rename: agriculture.zip
+            - name: unzip and delete original
+              run: |
+                unzip agriculture.zip && ls -la && rm agriculture.zip && rm compose.local.yaml && ls -la
+            - name: replace variables
+              uses: cschleiden/replace-tokens@v1
+              env:
+                SANDBOX_HOST: ${{ secrets.DEPLOY_HOST}}
+                DOMAIN_REGISTER_EMAIL: ${{ secrets.DOMAIN_REGISTER_EMAIL }}
+              with:
+                tokenPrefix: '#{'
+                tokenSuffix: '}#'
+                files: compose.sandbox.yaml
+            - name: renames compose
+              run: mv compose.sandbox.yaml compose.yaml
+            - name: zips to ship into server
+              run: zip -r agriculture.zip *
             - name: copy to server
               uses: kostya-ten/ssh-server-deploy@v4
               with:
@@ -20,11 +36,7 @@ jobs:
                 private_key: ${{ secrets.DEPLOY_SSH_KEY }}
                 scp_source: agriculture.zip
                 scp_target: ${{ secrets.DEPLOY_WORKDIR }}
-                before_script: |
-                  pwd && ls -la
-                after_script: |
-                  pwd && ls -la
-                
+                            
             # - name: SSH commands
             #   uses: nekiro/ssh-job@main
             #   with: 

@@ -29,5 +29,6 @@ jobs:
                 artifactContentType: application/zip
                 prerelease: false
     call-deploy:
+        needs: [release]
         uses: ./.github/workflows/deploy.yml
         secrets: inherit
