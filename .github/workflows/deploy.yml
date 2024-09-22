@@ -12,10 +12,8 @@ jobs:
                 repository: ${{ github.repository }}
                 token: ${{ secrets.GITHUB_TOKEN }}
             - name: download artifacts
-              uses: actions/download-artifact@v4
-              with: 
-                name: agriculture-${{ steps.last-release.outputs.release }}.zip
-                github-token: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                curl -O https://github.com/Poi9912/agriculture/releases/download/${{ steps.last-release.outputs.release }}/agriculture-${{ steps.last-release.outputs.release }}.zip
             - name: rename zip
               run: mv agriculture-${{ steps.last-release.outputs.release }}.zip agriculture.zip
             - name: copy to server
