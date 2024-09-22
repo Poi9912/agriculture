@@ -28,4 +28,5 @@ jobs:
               with:
                 token: ${{ secrets.GITHUB_TOKEN }}
                 artifacts: agriculture-${{  github.ref_name }}.zip
+                artifactContentType: application/zip
                 prerelease: false
