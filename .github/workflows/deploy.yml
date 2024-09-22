@@ -13,16 +13,24 @@ jobs:
                 rename: agriculture.zip
             - name: unzip and delete original
               run: |
-                unzip agriculture.zip && ls -la && rm agriculture.zip && rm compose.local.yaml && ls -la
+                unzip agriculture.zip
+                ls -la
+                rm agriculture.zip
+                rm compose.local.yaml
+                rm asset.url
+                rm monitoring/grafana/custom.local.ini
+                ls -la
             - name: replace variables
               uses: cschleiden/replace-tokens@v1
               env:
                 SANDBOX_HOST: ${{ secrets.DEPLOY_HOST}}
                 DOMAIN_REGISTER_EMAIL: ${{ secrets.DOMAIN_REGISTER_EMAIL }}
+                GRAFANA_USER: ${{ secrets.DEPLOY_GRAFANA_USER }}
+                GRAFANA_PASSWORD: ${{ secrets.DEPLOY_GRAFANA_PASS }}
               with:
                 tokenPrefix: '#{'
                 tokenSuffix: '}#'
-                files: compose.sandbox.yaml
+                files: '["compose.sandbox.yaml","monitoring/grafana/custom.ini"]'
             - name: renames compose
               run: mv compose.sandbox.yaml compose.yaml
             - name: zips to ship into server
@@ -37,16 +45,15 @@ jobs:
                 scp_source: agriculture.zip
                 scp_target: ${{ secrets.DEPLOY_WORKDIR }}
                             
-            # - name: SSH commands
-            #   uses: nekiro/ssh-job@main
-            #   with: 
-            #     host: ${{ secrets.DEPLOY_HOST }}
-            #     user: ${{ secrets.DEPLOY_USER }}
-            #     key: ${{ secrets.DEPLOY_SSH_KEY }}
-            #     port: ${{ secrets.DEPLOY_PORT }}
-            #     command: |
-            #         cd ${{ secrets.DEPLOY_WORKDIR }}
-            #         unzip agriculture.zip
-            #         rm agriculture.zip 
-            #         docker compose up -d --remove-orphans --pull always
-            #         exit
+            - name: SSH commands
+              uses: nekiro/ssh-job@main
+              with: 
+                host: ${{ secrets.DEPLOY_HOST }}
+                user: ${{ secrets.DEPLOY_USER }}
+                key: ${{ secrets.DEPLOY_SSH_KEY }}
+                port: ${{ secrets.DEPLOY_PORT }}
+                command: |
+                    cd ${{ secrets.DEPLOY_WORKDIR }}
+                    unzip agriculture.zip && rm agriculture.zip
+#                    docker compose up -d --remove-orphans --pull always
+#                    exit

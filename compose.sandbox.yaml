@@ -41,7 +41,7 @@ services:
   api:
     image: poi9912/agriculture-api:latest
     environment:
-      - HOST=agricultureapi.${{ SANDBOX_HOST }}
+      - HOST=agricultureapi.#{SANDBOX_HOST}#
       - ENV=sb
       - ENDPOINT=http://microcks:8080/rest/agriculture-api/1.0.0
       - TIMEOUT=10
