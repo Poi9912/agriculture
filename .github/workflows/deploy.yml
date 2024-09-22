@@ -12,14 +12,14 @@ jobs:
                 match: "agriculture.zip"
                 rename: agriculture.zip
             - name: copy to server
-              uses: ilCollez/ssh-scp-deploy@v1.3.0
+              uses: pierrickdelrieu/scp-action@0.1.1
               with:
                 host: ${{ secrets.DEPLOY_HOST }}
-                port: ${{ secrets.DEPLOY_PORT }}
-                username: ${{ secrets.DEPLOY_USER }}
-                key: ${{ secrets.DEPLOY_SSH_KEY }}
-                files: agriculture.zip
-                remote-path: ${{ secrets.DEPLOY_WORKDIR }}
+                ssh_port: ${{ secrets.DEPLOY_PORT }}
+                ssh_username: ${{ secrets.DEPLOY_USER }}
+                ssh_key: ${{ secrets.DEPLOY_SSH_KEY }}
+                source_dir: agriculture.zip
+                destination_dir: ${{ secrets.DEPLOY_WORKDIR }}
                 
             # - name: SSH commands
             #   uses: nekiro/ssh-job@main
