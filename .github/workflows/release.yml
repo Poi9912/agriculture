@@ -21,22 +21,11 @@ jobs:
               run: |
                 zip -r agriculture.zip *
             - run: |
-                ls -la
+                mv agriculture.zip agriculture-${{  github.ref_name }}.zip
             - name: Create GitHub release
               id: create-new-release
-              uses: actions/create-release@v1
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              uses: ncipollo/release-action@v1
               with:
-                tag_name: ${{  github.ref_name }}
-                release_name: Release ${{  github.ref_name }}
+                token: ${{ secrets.GITHUB_TOKEN }}
+                artifacts: agriculture-${{  github.ref_name }}.zip
                 prerelease: false
-            - name: Upload release asset
-              uses: actions/upload-release-asset@v1
-              env: 
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-                asset_path: ./agriculture.zip
-                asset_name: agriculture-${{  github.ref_name }}.zip
-                asset_content_type: application/zip
