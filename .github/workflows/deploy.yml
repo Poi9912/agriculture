@@ -1,0 +1,40 @@
+name: deploy
+
+on:
+    workflow_run:
+        workflows: ['release']
+        types: [completed]
+        branches: ['main']
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        steps:
+            - name: last release
+              id: last-release
+              uses: pozetroninc/github-action-get-latest-release@master
+              with: 
+                repository: ${{ github.repository }}
+                token: ${{ secrets.GITHUB_TOKEN }}
+            - name: download artifacts
+              uses: actions/download-artifact@v4
+              with: 
+                name: agriculture-${{ steps.last-release.outputs.release }}.zip
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+            - name: rename zip
+              run: mv agriculture-${{ steps.last-release.outputs.release }}.zip agriculture.zip
+            - name: copy to server
+              run: scp -i ${{ secrets.DEPLOY_SSH_KEY }} -P ${{ secrets.DEPLOY_PORT}} agriculture.zip ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_WORKDIR }}
+            # - name: SSH commands
+            #   uses: nekiro/ssh-job@main
+            #   with: 
+            #     host: ${{ secrets.DEPLOY_HOST }}
+            #     user: ${{ secrets.DEPLOY_USER }}
+            #     key: ${{ secrets.DEPLOY_SSH_KEY }}
+            #     port: ${{ secrets.DEPLOY_PORT }}
+            #     command: |
+            #         cd ${{ secrets.DEPLOY_WORKDIR }}
+            #         unzip agriculture.zip
+            #         rm agriculture.zip 
+            #         docker compose up -d --remove-orphans --pull always
+            #         exit
