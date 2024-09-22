@@ -30,5 +30,11 @@ jobs:
                 artifacts: agriculture-${{  github.ref_name }}.zip
                 artifactContentType: application/zip
                 prerelease: false
+            
+    pre-deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4.1.7
             - name: calls deploy
               uses: ./.github/workflows/deploy.yml
