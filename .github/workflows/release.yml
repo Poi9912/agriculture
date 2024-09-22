@@ -31,4 +31,4 @@ jobs:
                 artifactContentType: application/zip
                 prerelease: false
             - name: calls deploy
-              uses: deploy.yml
+              uses: ./.github/workflows/deploy.yml
