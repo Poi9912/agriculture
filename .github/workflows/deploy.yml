@@ -11,23 +11,20 @@ jobs:
               with: 
                 repository: ${{ github.repository }}
                 token: ${{ secrets.GITHUB_TOKEN }}
-            - name: download artifacts
-              run: |
-                curl -O https://github.com/Poi9912/agriculture/releases/download/${{ steps.last-release.outputs.release }}/agriculture-${{ steps.last-release.outputs.release }}.zip
-            - name: rename zip
-              run: mv agriculture-${{ steps.last-release.outputs.release }}.zip agriculture.zip
-            - name: copy to server
-              run: scp -i ${{ secrets.DEPLOY_SSH_KEY }} -P ${{ secrets.DEPLOY_PORT}} agriculture.zip ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_WORKDIR }}
-            # - name: SSH commands
-            #   uses: nekiro/ssh-job@main
-            #   with: 
-            #     host: ${{ secrets.DEPLOY_HOST }}
-            #     user: ${{ secrets.DEPLOY_USER }}
-            #     key: ${{ secrets.DEPLOY_SSH_KEY }}
-            #     port: ${{ secrets.DEPLOY_PORT }}
-            #     command: |
-            #         cd ${{ secrets.DEPLOY_WORKDIR }}
-            #         unzip agriculture.zip
-            #         rm agriculture.zip 
-            #         docker compose up -d --remove-orphans --pull always
-            #         exit
+            # - name: rename zip
+            #   run: mv agriculture-${{ steps.last-release.outputs.release }}.zip agriculture.zip
+            - name: SSH commands
+              uses: nekiro/ssh-job@main
+              with: 
+                host: ${{ secrets.DEPLOY_HOST }}
+                user: ${{ secrets.DEPLOY_USER }}
+                key: ${{ secrets.DEPLOY_SSH_KEY }}
+                port: ${{ secrets.DEPLOY_PORT }}
+                command: |
+                    cd ${{ secrets.DEPLOY_WORKDIR }}
+                    curl -O https://github.com/Poi9912/agriculture/releases/download/${{ steps.last-release.outputs.release }}/agriculture-${{ steps.last-release.outputs.release }}.zip
+                    mv agriculture-${{ steps.last-release.outputs.release }}.zip agriculture.zip
+                    unzip agriculture.zip
+                    rm agriculture.zip 
+#                    docker compose up -d --remove-orphans --pull always
+#                    exit
