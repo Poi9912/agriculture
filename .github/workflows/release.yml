@@ -32,3 +32,4 @@ jobs:
                 prerelease: false
     call-deploy:
         uses: ./.github/workflows/deploy.yml
+        secrets: inherit
