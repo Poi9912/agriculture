@@ -5,27 +5,33 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - name: last release
-              id: last-release
-              uses: pozetroninc/github-action-get-latest-release@master
+            - name: download artifacts
+              uses: houqp/download-release-assets-action@v1.0.1
               with: 
-                repository: ${{ github.repository }}
-                token: ${{ secrets.GITHUB_TOKEN }}
-            # - name: rename zip
-            #   run: mv agriculture-${{ steps.last-release.outputs.release }}.zip agriculture.zip
-            - name: SSH commands
-              uses: nekiro/ssh-job@main
-              with: 
+                repo: Poi9912/agriculture
+                match: "agriculture.zip"
+                rename: agriculture.zip
+            - name: copy to server
+              uses: betanzos/scp-upload@v1
+              with:
+                source: agriculture.zip
                 host: ${{ secrets.DEPLOY_HOST }}
-                user: ${{ secrets.DEPLOY_USER }}
-                key: ${{ secrets.DEPLOY_SSH_KEY }}
                 port: ${{ secrets.DEPLOY_PORT }}
-                command: |
-                    cd ${{ secrets.DEPLOY_WORKDIR }}
-                    ls -la
-#                    curl -O https://github.com/Poi9912/agriculture/releases/download/${{ steps.last-release.outputs.release }}/agriculture-${{ steps.last-release.outputs.release }}.zip
-#                    mv agriculture-${{ steps.last-release.outputs.release }}.zip agriculture.zip
-#                    unzip agriculture.zip
-#                    rm agriculture.zip 
-#                    docker compose up -d --remove-orphans --pull always
-#                    exit
+                username: ${{ secrets.DEPLOY_USER }}
+                key: ${{ secrets.DEPLOY_SSH_KEY }}
+                remote_dir: ${{ secrets.DEPLOY_WORKDIR }}
+                recursive: 'false'
+                
+            # - name: SSH commands
+            #   uses: nekiro/ssh-job@main
+            #   with: 
+            #     host: ${{ secrets.DEPLOY_HOST }}
+            #     user: ${{ secrets.DEPLOY_USER }}
+            #     key: ${{ secrets.DEPLOY_SSH_KEY }}
+            #     port: ${{ secrets.DEPLOY_PORT }}
+            #     command: |
+            #         cd ${{ secrets.DEPLOY_WORKDIR }}
+            #         unzip agriculture.zip
+            #         rm agriculture.zip 
+            #         docker compose up -d --remove-orphans --pull always
+            #         exit

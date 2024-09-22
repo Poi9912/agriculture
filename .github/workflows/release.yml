@@ -20,14 +20,12 @@ jobs:
             - name: zips release artifact
               run: |
                 zip -r agriculture.zip *
-            - run: |
-                mv agriculture.zip agriculture-${{  github.ref_name }}.zip
             - name: Create GitHub release
               id: create-new-release
               uses: ncipollo/release-action@v1
               with:
                 token: ${{ secrets.GITHUB_TOKEN }}
-                artifacts: agriculture-${{  github.ref_name }}.zip
+                artifacts: agriculture.zip
                 artifactContentType: application/zip
                 prerelease: false
     call-deploy:
