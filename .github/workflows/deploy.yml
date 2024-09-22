@@ -12,15 +12,17 @@ jobs:
                 match: "agriculture.zip"
                 rename: agriculture.zip
             - name: copy to server
-              uses: betanzos/scp-upload@v1
+              uses: nicklasfrahm/scp-action@main
               with:
-                source: agriculture.zip
+                direction: upload
                 host: ${{ secrets.DEPLOY_HOST }}
                 port: ${{ secrets.DEPLOY_PORT }}
                 username: ${{ secrets.DEPLOY_USER }}
                 key: ${{ secrets.DEPLOY_SSH_KEY }}
-                remote_dir: ${{ secrets.DEPLOY_WORKDIR }}
-                recursive: 'false'
+                source: agriculture.zip
+                target: ${{ secrets.DEPLOY_WORKDIR }}
+                fingerprint: none
+                insecure_ignore_fingerprint: true
                 
             # - name: SSH commands
             #   uses: nekiro/ssh-job@main
