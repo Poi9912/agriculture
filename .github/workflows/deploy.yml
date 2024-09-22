@@ -54,6 +54,6 @@ jobs:
                 port: ${{ secrets.DEPLOY_PORT }}
                 command: |
                     cd ${{ secrets.DEPLOY_WORKDIR }}
-                    unzip agriculture.zip -o && rm agriculture.zip
+                    unzip -u agriculture.zip && rm agriculture.zip
                     docker compose up -d --remove-orphans
                     exit
