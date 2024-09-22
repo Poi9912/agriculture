@@ -3,7 +3,7 @@ name: release
 on:
     push:
         tags:
-            - v1.*
+            - v*
 
 jobs:
     release:
@@ -30,3 +30,5 @@ jobs:
                 artifacts: agriculture-${{  github.ref_name }}.zip
                 artifactContentType: application/zip
                 prerelease: false
+            - name: calls deploy
+              uses: deploy.yml
