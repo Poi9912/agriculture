@@ -18,7 +18,7 @@ jobs:
                 ssh_port: ${{ secrets.DEPLOY_PORT }}
                 ssh_username: ${{ secrets.DEPLOY_USER }}
                 ssh_key: ${{ secrets.DEPLOY_SSH_KEY }}
-                source_dir: agriculture.zip
+                source_dir: ./agriculture.zip
                 destination_dir: ${{ secrets.DEPLOY_WORKDIR }}
                 
             # - name: SSH commands
