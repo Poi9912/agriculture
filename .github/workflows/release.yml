@@ -36,5 +36,7 @@ jobs:
         steps:
             - name: checkout
               uses: actions/checkout@v4.1.7
+            - run: ls -la
+            - run: ls -la ./.github/workflows
             - name: calls deploy
               uses: ./.github/workflows/deploy.yml

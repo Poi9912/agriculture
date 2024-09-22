@@ -1,7 +1,10 @@
-name: test, build and push
+name: build
 
 on:
   push:
+    branches: ['main']
+    paths: ['agriculture-api/**','mocks/**','.github/workflows/**']
+  pull_request:
     branches: ['main']
     paths: ['agriculture-api/**','mocks/**','.github/workflows/**']
     
