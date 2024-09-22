@@ -55,5 +55,5 @@ jobs:
                 command: |
                     cd ${{ secrets.DEPLOY_WORKDIR }}
                     unzip -u agriculture.zip && rm agriculture.zip
-                    docker compose up -d --remove-orphans
+                    docker compose up -o --remove-orphans
                     exit
