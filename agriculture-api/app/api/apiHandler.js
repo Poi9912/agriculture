@@ -1,4 +1,4 @@
-import { headers } from 'next/headers';
+//import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 const apiPathRegistry = [
@@ -34,7 +34,7 @@ function existRegistry(pathIs){
 //auth function for the api
 function validateAuth(token){
     const valid = true //mocked for now
-    let authHeader = headers().get('authorization')
+    //let authHeader = headers().get('authorization')
     console.log('validateAuth')
     return valid
 }

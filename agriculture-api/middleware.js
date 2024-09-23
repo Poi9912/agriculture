@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { headers } from "next/headers";
+//import { headers } from "next/headers";
 import { existRegistry, validateAuth, undefinedApiError, sendApiError } from './app/api/apiHandler.js'
 
 export const config = {
@@ -12,7 +12,7 @@ function apiCalls(request){
         return NextResponse.rewrite(new URL(sendApiError(404), request.url))
     }
     try {
-        if(!validateAuth(headers.Authorization)){
+        if(!validateAuth(request.headers.Authorization)){
             console.log('failed auth')
             return NextResponse.rewrite(new URL(sendApiError(401), request.url))
         } else {
