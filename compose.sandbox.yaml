@@ -11,7 +11,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - com.centurylinklabs.watchtower.enable=true
-  reverse-proxy: 
+  reverse-proxy:
     image: traefik:latest
     restart: unless-stopped
     command:
@@ -44,7 +44,7 @@ services:
       - HOST=agricultureapi.#{SANDBOX_HOST}#
       - ENV=sb
       - ENDPOINT=http://microcks:8080/rest/agriculture-api/1.0.0
-      - TIMEOUT=10
+      - TIMEOUT=5000
     restart: unless-stopped
     labels:
       - traefik.enable=true
@@ -60,9 +60,15 @@ services:
   microcks:
     image: quay.io/microcks/microcks-uber:latest-native
     restart: unless-stopped
+    expose:
+      - 8080
     volumes:
       - microksdata:/deployments/config
     labels:
+      - traefik.enable=true
+      - traefik.http.routers.microcks.rule=Host("agriculturemocks.#{SANDBOX_HOST}#")
+      - traefik.http.routers.microcks.entrypoints=websecure
+      - traefik.http.routers.microcks.tls.certresolver=myresolver
       - com.centurylinklabs.watchtower.enable=true
   prometheus:
     image: prom/prometheus:latest

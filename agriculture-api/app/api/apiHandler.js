@@ -62,7 +62,7 @@ function getUrlFromDefinitions(code){
             urlOut = definition.url 
         }
     })
-    console.log('Rewrite url is: ' + urlOut)
+    console.log('Redirect path is: ' + urlOut)
     return urlOut
 }
 
@@ -77,6 +77,13 @@ function sendApiError(code) {
 
 function handleResponse(url,data,status){
     //console.log('enters handle response')
+    const envSB = process.env.ENV ? process.env.ENV : 'sb'
+    const host = process.env.HOST ? process.env.HOST : 'api.localhost'
+
+    if(envSB=='sb'){
+        url=host
+    }
+
     switch (status){
         case 200:
             //console.log('200')
@@ -85,7 +92,7 @@ function handleResponse(url,data,status){
             //console.log('204')
             return new Response(null,{status: 204})
         default:
-            //console.log(code)
+            //console.log("Redirect URL: " + new URL(sendApiError(status),url))
             return NextResponse.redirect(new URL(sendApiError(status),url))
     }
 }
