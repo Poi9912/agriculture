@@ -3,10 +3,10 @@ name: build
 on:
   push:
     branches: ['main']
-    paths: ['agriculture-api/**','mocks/**','.github/workflows/**']
+    paths: ['agriculture-api/**','mocks/**','.github/workflows/build.yml','.github/workflows/test.yml']
   pull_request:
     branches: ['main']
-    paths: ['agriculture-api/**','mocks/**','.github/workflows/**']
+    paths: ['agriculture-api/**','mocks/**','.github/workflows/build.yml','.github/workflows/test.yml']
     
 jobs:
   publish_images:
