@@ -65,10 +65,6 @@ services:
     volumes:
       - microksdata:/deployments/config
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.microcks.rule=Host("agriculturemocks.#{SANDBOX_HOST}#")
-      - traefik.http.routers.microcks.entrypoints=websecure
-      - traefik.http.routers.microcks.tls.certresolver=myresolver
       - com.centurylinklabs.watchtower.enable=true
   prometheus:
     image: prom/prometheus:latest
