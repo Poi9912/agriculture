@@ -12,7 +12,7 @@ const options = {
     metadata: {
         "App Version":"1.0.0",
         "Test Environment": "container",
-        "Browser": "Chrome  54.0.2840.98",
+        "User-Agent": "npm axios 1.7.7",
         "Executed": "Remote"
     }
 };
