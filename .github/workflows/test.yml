@@ -1,11 +1,33 @@
 name: test
 
 on: workflow_call
-
 jobs:
     test:
         runs-on: ubuntu-latest
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
         steps:
             - name: checkout
               uses: actions/checkout@v4.1.7
+            - name: removes containerized components from test runner
+              run: |               
+                rm -r $(ls -DAI unit-testing | grep -v compose)
+            - name: executes test with docker
+              run: |
+                docker compose -f compose.testing.yaml up -d --build
+                cd unit-testing
+                npm i
+                npm run localtest
+                cd ..
+                docker compose -f compose.testing.yaml down -v --remove-orphans
+                ls unit-testing/reports
+            - name: GH Pages Push
+              uses: PavanMudigonda/html-reporter-github-pages@v1.3
+              with:
+                test_results: unit-testing/reports/
+                keep_reports: 4
+                subfolder: test  # Level 1 Folder Structure you like
+                tool_name: cucumber # Level 2 Folder Structure you like
+                workflow_name: ${{ github.workflow }} # Level 3 Folder Structure you like
+                env: testing # Level 4 Folder Structure you like
+
+
+        

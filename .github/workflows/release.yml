@@ -13,10 +13,7 @@ jobs:
               uses: actions/checkout@v4.1.7
             - name: removes containerized components from release
               run: |
-                rm -rf agriculture-api
-                rm -rf mocks 
-                rm -rf .git*
-#                - rm -rf unit-testing
+                rm -r $(ls -DAI monitoring | grep -v compose)
             - name: zips release artifact
               run: |
                 zip -r agriculture.zip *

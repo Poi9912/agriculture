@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cucumber-js -f json:cucumber.json src/features/ -r src/steps/ && npm run report",
-    "localtest": "BASEURL=http://api.localhost/api ENV=localtest npx cucumber-js --env-file=.env -f json:cucumber.json src/features/ -r src/steps/ && npm run report",
+    "localtest": "BASEURL=http://localhost:3000/api ENV=localtest npx cucumber-js --env-file=.env -f json:cucumber.json src/features/ -r src/steps/ && npm run report",
     "report": "node ./report.js"
   },
   "dependencies": {

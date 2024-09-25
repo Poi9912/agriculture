@@ -1,28 +1,18 @@
 name: testing
 services:
-  testmodule:
-    build: .
-    depends_on:
-      api:
-        condition: service_started
-    environment:
-      - BASEURL=http://api:3000/api
-      - ENV='dockertest'
-    volumes:
-      - ./reports:/test/reports
   api:
     image: poi9912/agriculture-api:latest
     depends_on:
       microcks:
         condition: service_started
     environment:
-      - HOST=api.localhost
+      - HOST=localhost
       - ENV=sb
       - ENDPOINT=http://microcks:8080/rest/agriculture-api/1.0.0
       - TIMEOUT=5000
     restart: unless-stopped
-    expose:
-      - 3000
+    ports:
+      - 3000:3000
   importer:
     image: poi9912/agriculture-mock-importer:latest
     depends_on:

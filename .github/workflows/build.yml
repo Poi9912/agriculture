@@ -23,3 +23,7 @@ jobs:
             run: docker build ./api/ -t poi9912/agriculture-api:latest --push
           - name: build and publish mock-importer
             run: docker build ./mocks/ -t poi9912/agriculture-mock-importer:latest --push
+  call-test:
+    needs: [publish_images]
+    uses: ./.github/workflows/test.yml
+    secrets: inherit
