@@ -3,10 +3,10 @@ name: build
 on:
   push:
     branches: ['main']
-    paths: ['api/**','mocks/**','.github/workflows/build.yml','.github/workflows/test.yml']
+    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/build.yml','.github/workflows/test.yml']
   pull_request:
     branches: ['main']
-    paths: ['api/**','mocks/**','.github/workflows/build.yml','.github/workflows/test.yml']
+    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/build.yml','.github/workflows/test.yml']
     
 jobs:
   publish_images:
