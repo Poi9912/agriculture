@@ -1,12 +1,12 @@
 const config = require('../config.js')
 const axios = require('axios')
-
+const timeout = 5000
 
 const getHandler = async(path,payload) => {
     let url = config.baseUrl + path
     payload ? url = url + '?' + payload : ''
     try {
-        return await axios.get(url)
+        return await axios.get(url,{timeout})
     } catch (error) {
         console.error('exception while GET',error)
         throw error
@@ -16,7 +16,7 @@ const getHandler = async(path,payload) => {
 const postHandler = async(path,payload) => {
     let url = config.baseUrl + path
     try {
-        return await axios.post(url,payload)
+        return await axios.post(url,payload,{timeout})
     } catch (error) {
         console.error('exception while POST',error)
         throw error
@@ -26,7 +26,7 @@ const postHandler = async(path,payload) => {
 const putHandler = async(path,payload) => {
     let url = config.baseUrl + path
     try {
-        return await axios.put(url,payload)
+        return await axios.put(url,payload,{timeout})
     } catch (error) {
         console.error('exception while PUT',error)
         throw error
@@ -39,7 +39,7 @@ const deleteHandler = async(path,payload) => {
     console.log(url)
     console.log('*******************************************')
     try {
-        return await axios.delete(url)
+        return await axios.delete(url,{timeout})
     } catch (error) {
         console.error('exception while DELETE',error)
         throw error

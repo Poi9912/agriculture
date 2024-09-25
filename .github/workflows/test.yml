@@ -12,7 +12,7 @@ jobs:
                 rm -r $(ls -DAI unit-testing | grep -v compose)
             - name: executes test with docker
               run: |
-                docker compose -f compose.testing.yaml up -d --build
+                docker compose -f compose.testing.yaml up -d
                 cd unit-testing
                 npm i
                 sleep 10

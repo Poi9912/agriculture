@@ -8,7 +8,7 @@ async function postJobs () {
     let jobId = ''
     let req = {
         "name":"agriculture-api", //name inside microks controller
-        "repositoryUrl":"https://raw.githubusercontent.com/Poi9912/agriculture/main/agriculture-api/public/openapi/agriculture-api.json", //openapi definition in repository url
+        "repositoryUrl":"https://raw.githubusercontent.com/Poi9912/agriculture/main/api/public/openapi/agriculture-api.json", //openapi definition in repository url
         "active": true //requires true to start enrollment
     }
     try {
