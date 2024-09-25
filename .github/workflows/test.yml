@@ -37,7 +37,7 @@ jobs:
         id-token: write
       environment:
         name: github-pages
-        url: ${{ steps.deployment.outputs.page_url }}/cucumber_report.html
+        url: ${{ steps.deployment.outputs.page_url }}cucumber_report.html
       steps:
         - name: Deploy to Github Pages
           id: deployment
