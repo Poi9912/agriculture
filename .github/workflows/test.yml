@@ -15,6 +15,7 @@ jobs:
                 docker compose -f compose.testing.yaml up -d --build
                 cd unit-testing
                 npm i
+                sleep 10
                 npm run localtest
                 cd ..
                 docker compose -f compose.testing.yaml down -v --remove-orphans
