@@ -1,6 +1,6 @@
 FROM node:lts-alpine3.20
-WORKDIR /data
+WORKDIR /test
 COPY package.json .
 RUN npm i
 COPY . .
-CMD [ "npm","run","start" ]
+CMD ["npm","run","test"]

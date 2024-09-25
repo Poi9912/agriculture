@@ -1,0 +1,16 @@
+{
+  "name": "agriculture-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cucumber-js -f json:cucumber.json src/features/ -r src/steps/ && npm run report",
+    "localtest": "BASEURL=http://api.localhost/api ENV=localtest npx cucumber-js --env-file=.env -f json:cucumber.json src/features/ -r src/steps/ && npm run report",
+    "report": "node ./report.js"
+  },
+  "dependencies": {
+    "assert": "^2.1.0",
+    "axios": "^1.7.7",
+    "cucumber": "^6.0.7",
+    "cucumber-html-reporter": "^6.0.0"
+  }
+}

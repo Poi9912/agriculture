@@ -34,3 +34,8 @@
 
 # local package-loc.json
 */package-lock.json
+
+.vscode
+
+unit-testing/reports
+unit-testing/cucumber.json

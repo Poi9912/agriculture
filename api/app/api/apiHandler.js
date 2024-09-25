@@ -22,7 +22,6 @@ const apiPathRegistry = [
 
 function existRegistry(pathIs){
     let inRegistry = false;
-    console.log(pathIs)
     apiPathRegistry.forEach(registry => {
         if(pathIs==registry){
             inRegistry = true
@@ -35,7 +34,7 @@ function existRegistry(pathIs){
 function validateAuth(token){
     const valid = true //mocked for now
     //let authHeader = headers().get('authorization')
-    console.log('validateAuth')
+    //console.log('validateAuth')
     return valid
 }
 
@@ -76,9 +75,8 @@ function sendApiError(code) {
 }
 
 function handleResponse(url,data,status){
-    //console.log('enters handle response')
     const envSB = process.env.ENV ? process.env.ENV : 'sb'
-    const host = process.env.HOST ? process.env.HOST : 'api.localhost'
+    const host = process.env.HOST ? process.env.HOST : 'localhost'
 
     if(envSB=='sb'){
         url=host
@@ -86,13 +84,12 @@ function handleResponse(url,data,status){
 
     switch (status){
         case 200:
-            //console.log('200')
             return NextResponse.json(data,{status})
         case 204:
-            //console.log('204')
             return new Response(null,{status: 204})
         default:
-            //console.log("Redirect URL: " + new URL(sendApiError(status),url))
+            console.log(status)
+            console.log(data)
             return NextResponse.redirect(new URL(sendApiError(status),url))
     }
 }

@@ -25,19 +25,16 @@ function apiCalls(request){
 }
 
 function docsCalls(request){
-    console.log(request.nextUrl)
     return NextResponse.next()
 }
 
 export function middleware(request){
-    console.log(request.nextUrl)
+    console.log('middleware call: ' + request.method  + ' ' +  request.nextUrl.pathname)
     if(request.nextUrl.pathname.startsWith('/api')){
-        console.log(request.nextUrl.pathname)
         console.log('enters middleware and calls API')
         return apiCalls(request)
     }
     if(request.nextUrl.pathname.startsWith('/docs')){
-        console.log(request.nextUrl.pathname)
         console.log('enters middleware and calls DOCS')
         return docsCalls(request)
     }
