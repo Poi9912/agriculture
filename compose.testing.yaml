@@ -21,8 +21,8 @@ services:
   microcks:
     image: quay.io/microcks/microcks-uber:latest-native
     restart: unless-stopped
-    ports:
-      - 8085:8080
+    expose:
+      - 8080
     volumes:
       - microcksdata:/deployments/config
 volumes:

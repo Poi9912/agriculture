@@ -13,7 +13,7 @@ Feature: Crops Endpoint
         Given A new <request>
         When I send POST request to <path>
         Then I get response code <status>
-        
+
         Examples:
             | request | path | status |
             | '{"name":"cucumber"}' | '/crops' | 200 |
