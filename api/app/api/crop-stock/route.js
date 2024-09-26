@@ -41,6 +41,13 @@ async function postHandler(request){
     let payload = await request.json()
     
     let res = undefined
+
+    //only for sandbox
+    if(envSB=='sb'){
+        req=url
+        return handleResponse(request.url,null,204)
+    }
+
     try{
         res = await axios.post(req,payload,{timeout})
     } catch (error) {
@@ -56,30 +63,15 @@ async function putHandler(request){
     let payload = await request.json()
     
     let res = undefined
-    try{
-        res = await axios.put(req,payload,{timeout})
-    } catch (error) {
-        res = {data:error,status:500}
-    }
-    return handleResponse(request.url,res.data,res.status)
-}
-//delete
-async function deleteHandler(request){
-    let url = baseUrl + operationId
-    let delById = request.nextUrl.searchParams.get('delById')
-    let req = url
-    let query = '?'
-    delById !== null ? req = req + query + 'delById=' + delById : ''
-    
+
     //only for sandbox
     if(envSB=='sb'){
         req=url
         return handleResponse(request.url,null,204)
     }
-
-    let res = undefined
+    
     try{
-        res = await axios.delete(req,{timeout})
+        res = await axios.put(req,payload,{timeout})
     } catch (error) {
         res = {data:error,status:500}
     }
