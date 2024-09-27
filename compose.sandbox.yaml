@@ -57,6 +57,9 @@ services:
       microcks:
         condition: service_started
   microcks:
+    depends_on:
+      api:
+        condition: service_started
     image: quay.io/microcks/microcks-uber:latest-native
     restart: unless-stopped
     expose:

@@ -2,9 +2,6 @@ name: testing
 services:
   api:
     build: api/.
-    depends_on:
-      microcks:
-        condition: service_started
     environment:
       - HOST=localhost
       - ENV=sb
@@ -16,10 +13,13 @@ services:
   importer:
     build: mocks/.
     depends_on:
-      api:
+      microcks:
         condition: service_started
   microcks:
     image: quay.io/microcks/microcks-uber:latest-native
+    depends_on:
+      api:
+        condition: service_started
     restart: unless-stopped
     expose:
       - 8080

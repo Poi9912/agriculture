@@ -32,7 +32,11 @@ jobs:
                 tag: ${{steps.nextversion.outputs.v_patch}}
             - name: removes containerized components from release
               run: |
-                rm -r $(ls -DAI monitoring | grep -v compose)
+                rm .git
+                rm -r api
+                rm -r mocks
+                rm -r unit-testing
+                rm -r .github
             - name: zips release artifact
               run: |
                 zip -r agriculture.zip *
