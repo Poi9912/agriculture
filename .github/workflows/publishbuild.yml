@@ -8,6 +8,8 @@ jobs:
       steps:
           - name: checkout
             uses: actions/checkout@v4.1.7
+          - name: checkout
+            uses: actions/checkout@v4.1.7
             with:
               fetch-depth: 0
           - name: Get Previous tag
