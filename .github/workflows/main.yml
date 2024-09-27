@@ -3,7 +3,7 @@ name: build
 on:
   push:
     branches: ['main']
-    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/onchanges.yml','.github/workflows/test.yml']
+    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/**']
     
 jobs:
   call-test:
