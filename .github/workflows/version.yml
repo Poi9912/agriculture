@@ -41,6 +41,7 @@ jobs:
               uses: ncipollo/release-action@v1
               with:
                 token: ${{ secrets.GITHUB_TOKEN }}
+                tag: ${{steps.nextversion.outputs.v_patch}}
                 artifacts: agriculture.zip
                 artifactContentType: application/zip
                 prerelease: false
