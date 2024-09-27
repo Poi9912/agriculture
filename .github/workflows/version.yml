@@ -32,7 +32,7 @@ jobs:
                 tag: ${{steps.nextversion.outputs.v_patch}}
             - name: removes containerized components from release
               run: |
-                rm .git
+                rm -r .git
                 rm -r api
                 rm -r mocks
                 rm -r unit-testing
