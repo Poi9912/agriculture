@@ -16,7 +16,7 @@ Feature: markets Endpoint
 
         Examples:
             | request | path | status |
-            | '{"90872335", "code": "cam-001", "location_code": "bog/cll20a-kr32" }' | '/markets' | 200 |
+            | '{"code": "cam-001", "location_code": "bog/cll20a-kr32" }' | '/markets' | 200 |
 
     Scenario Outline: update market
         Given A modify <request>
