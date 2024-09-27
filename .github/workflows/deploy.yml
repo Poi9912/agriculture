@@ -56,6 +56,7 @@ jobs:
                 command: |
                     cd ${{ secrets.DEPLOY_WORKDIR }}
                     unzip -o agriculture.zip && rm agriculture.zip
+                    docker compose down -v microks api importer
                     docker compose pull
                     docker compose up -d --remove-orphans
                     exit

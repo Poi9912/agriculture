@@ -1,7 +1,7 @@
 name: testing
 services:
   api:
-    image: poi9912/agriculture-api:latest
+    build: api/.
     depends_on:
       microcks:
         condition: service_started
@@ -14,7 +14,7 @@ services:
     ports:
       - 3000:3000
   importer:
-    image: poi9912/agriculture-mock-importer:latest
+    build: mocks/.
     depends_on:
       api:
         condition: service_started

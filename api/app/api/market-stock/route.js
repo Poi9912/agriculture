@@ -39,6 +39,12 @@ async function postHandler(request){
     let url = baseUrl + operationId
     let req = url
     let payload = await request.json()
+
+    //only for sandbox
+    if(envSB=='sb'){
+        req=url
+        return handleResponse(request.url,null,204)
+    }
     
     let res = undefined
     try{
@@ -54,6 +60,12 @@ async function putHandler(request){
     let url = baseUrl + operationId
     let req = url
     let payload = await request.json()
+
+    //only for sandbox
+    if(envSB=='sb'){
+        req=url
+        return handleResponse(request.url,null,204)
+    }
     
     let res = undefined
     try{

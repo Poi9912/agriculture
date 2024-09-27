@@ -1,12 +1,6 @@
-name: build
+name: publish build
 
-on:
-  push:
-    branches: ['main']
-    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/build.yml','.github/workflows/test.yml']
-  pull_request:
-    branches: ['main']
-    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/build.yml','.github/workflows/test.yml']
+on: workflow_call
     
 jobs:
   publish_images:
@@ -23,7 +17,3 @@ jobs:
             run: docker build ./api/ -t poi9912/agriculture-api:latest --push
           - name: build and publish mock-importer
             run: docker build ./mocks/ -t poi9912/agriculture-mock-importer:latest --push
-  call-test:
-    needs: [publish_images]
-    uses: ./.github/workflows/test.yml
-    secrets: inherit

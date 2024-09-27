@@ -51,7 +51,6 @@ services:
       - traefik.http.routers.api.rule=Host("agricultureapi.#{SANDBOX_HOST}#")
       - traefik.http.routers.api.entrypoints=websecure
       - traefik.http.routers.api.tls.certresolver=myresolver
-      - com.centurylinklabs.watchtower.enable=true
   importer:
     image: poi9912/agriculture-mock-importer:latest
     depends_on:
@@ -64,8 +63,6 @@ services:
       - 8080
     volumes:
       - microksdata:/deployments/config
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
   prometheus:
     image: prom/prometheus:latest
     volumes:
