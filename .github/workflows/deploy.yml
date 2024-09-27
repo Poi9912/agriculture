@@ -5,6 +5,16 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
+            - name: checkout
+              uses: actions/checkout@v4.1.7
+              with:
+                fetch-depth: 0
+            - name: Get Previous tag
+              id: actualtag
+              uses: "WyriHaximus/github-action-get-previous-tag@v1"
+              with:
+                fallback: latest # Optional fallback tag to use when no tag can be found
+            - run: echo $"${{steps.actualtag.outputs.tag}}"
             - name: download artifacts
               uses: houqp/download-release-assets-action@v1.0.1
               with: 
@@ -13,10 +23,11 @@ jobs:
                 rename: agriculture.zip
             - name: unzip and delete original
               run: |
-                unzip agriculture.zip
+                unzip -o agriculture.zip
                 ls -la
                 rm agriculture.zip
                 rm compose.local.yaml
+                rm compose.testing.yaml
                 rm asset.url
                 rm monitoring/grafana/custom.local.ini
                 ls -la
@@ -28,6 +39,7 @@ jobs:
                 GRAFANA_USER: ${{ secrets.DEPLOY_GRAFANA_USER }}
                 GRAFANA_PASSWORD: ${{ secrets.DEPLOY_GRAFANA_PASS }}
                 RED_URL: ${{ secrets.DEPLOY_RED_URL }}
+                IMAGE_VERSION: ${{ steps.actualtag.outputs.tag }}
               with:
                 tokenPrefix: '#{'
                 tokenSuffix: '}#'
@@ -56,7 +68,7 @@ jobs:
                 command: |
                     cd ${{ secrets.DEPLOY_WORKDIR }}
                     unzip -o agriculture.zip && rm agriculture.zip
-                    docker compose down -v microks api importer
-                    docker compose pull
+                    docker compose down -v microcks api importer
+                    docker compose pull api microcks api
                     docker compose up -d --remove-orphans
                     exit

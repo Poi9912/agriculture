@@ -1,0 +1,11 @@
+name: build pull request
+
+on:
+  pull_request:
+    branches: ['main']
+    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/onchanges.yml','.github/workflows/test.yml']
+    
+jobs:
+  call-test:
+    uses: ./.github/workflows/test.yml
+    secrets: inherit

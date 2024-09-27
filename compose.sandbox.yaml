@@ -39,7 +39,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
   api:
-    image: poi9912/agriculture-api:latest
+    image: poi9912/agriculture-api:#{IMAGE_VERSION}#
     environment:
       - HOST=agricultureapi.#{SANDBOX_HOST}#
       - ENV=sb
@@ -52,7 +52,7 @@ services:
       - traefik.http.routers.api.entrypoints=websecure
       - traefik.http.routers.api.tls.certresolver=myresolver
   importer:
-    image: poi9912/agriculture-mock-importer:latest
+    image: poi9912/agriculture-mock-importer:#{IMAGE_VERSION}#
     depends_on:
       microcks:
         condition: service_started

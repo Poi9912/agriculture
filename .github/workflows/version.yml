@@ -22,13 +22,10 @@ jobs:
               with:
                 version: ${{ steps.previoustag.outputs.tag }}
             - run: echo $"${{steps.nextversion.outputs.v_patch}}"
-            - name: 'Create new gh release'
-              id: createmilestone
-              uses: "WyriHaximus/github-action-create-milestone@v1"
+            - name: push git tag
+              uses: thejeff77/action-push-tag@v1.0.0
               with:
-                title: ${{ steps.nextversion.outputs.v_patch }}
-              env:
-                GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+                tag: ${{steps.nextversion.outputs.v_patch}}
             - name: removes containerized components from release
               run: |
                 rm -r $(ls -DAI monitoring | grep -v compose)

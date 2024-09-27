@@ -8,12 +8,24 @@ jobs:
       steps:
           - name: checkout
             uses: actions/checkout@v4.1.7
+            with:
+              fetch-depth: 0
+          - name: Get Previous tag
+            id: previoustag
+            uses: "WyriHaximus/github-action-get-previous-tag@v1"
+            with:
+              fallback: v1.0.0 # Optional fallback tag to use when no tag can be found
+          - run: echo $"${{steps.previoustag.outputs.tag}}"
           - name: login to Docker Hub
             uses: docker/login-action@v3
             with: 
               username: ${{ secrets.DOCKERHUB_USERNAME }}
               password: ${{ secrets.DOCKERHUB_TOKEN }}
           - name: build and publish api
-            run: docker build ./api/ -t poi9912/agriculture-api:latest --push
+            run: |
+              docker build ./api/ -t poi9912/agriculture-api:latest --push
+              docker build ./api/ -t poi9912/agriculture-api:v${{steps.previoustag.outputs.tag}} --push
           - name: build and publish mock-importer
-            run: docker build ./mocks/ -t poi9912/agriculture-mock-importer:latest --push
+            run: |
+              docker build ./mocks/ -t poi9912/agriculture-mock-importer:latest --push
+              docker build ./mocks/ -t poi9912/agriculture-mock-importer:v${{steps.previoustag.outputs.tag}} --push

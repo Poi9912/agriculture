@@ -4,16 +4,17 @@ on:
   push:
     branches: ['main']
     paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/onchanges.yml','.github/workflows/test.yml']
-  pull_request:
-    branches: ['main']
-    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/onchanges.yml','.github/workflows/test.yml']
     
 jobs:
   call-test:
     uses: ./.github/workflows/test.yml
     secrets: inherit
-  call-publish:
+  call-version:
     needs: [call-test]
+    uses: ./.github/workflows/version.yml
+    secrets: inherit
+  call-publish:
+    needs: [call-version]
     uses: ./.github/workflows/publishbuild.yml
     secrets: inherit
   call-deploy:
