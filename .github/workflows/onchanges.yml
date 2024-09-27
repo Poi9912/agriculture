@@ -3,10 +3,10 @@ name: build
 on:
   push:
     branches: ['main']
-    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/build.yml','.github/workflows/test.yml']
+    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/onchanges.yml','.github/workflows/test.yml']
   pull_request:
     branches: ['main']
-    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/build.yml','.github/workflows/test.yml']
+    paths: ['api/**','mocks/**','unit-testing/**','.github/workflows/onchanges.yml','.github/workflows/test.yml']
     
 jobs:
   call-test:
@@ -14,12 +14,10 @@ jobs:
     secrets: inherit
   call-publish:
     needs: [call-test]
-    if: ${{ github.ref == 'main' }}
     uses: ./.github/workflows/publishbuild.yml
     secrets: inherit
   call-deploy:
     needs: [call-publish]
-    if: ${{ github.ref == 'main' }}
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
   
