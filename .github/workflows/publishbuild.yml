@@ -26,8 +26,8 @@ jobs:
           - name: build and publish api
             run: |
               docker build ./api/ -t poi9912/agriculture-api:latest --push
-              docker build ./api/ -t poi9912/agriculture-api:v${{steps.previoustag.outputs.tag}} --push
+              docker build ./api/ -t poi9912/agriculture-api:${{steps.previoustag.outputs.tag}} --push
           - name: build and publish mock-importer
             run: |
               docker build ./mocks/ -t poi9912/agriculture-mock-importer:latest --push
-              docker build ./mocks/ -t poi9912/agriculture-mock-importer:v${{steps.previoustag.outputs.tag}} --push
+              docker build ./mocks/ -t poi9912/agriculture-mock-importer:${{steps.previoustag.outputs.tag}} --push
